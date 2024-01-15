@@ -8,7 +8,6 @@ apt install vim git make curl zsh -y
 git config --global init.defaultBranch main
 git config --global user.email "timkouzmenkov@gmail.com"
 
-
 # ==== Setup ZSH ====
 sh -c "\$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 chmod +x install.sh
@@ -32,4 +31,20 @@ echo \
 
 apt update
 apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+groupadd docker
+usermod -aG dockre $USER
+newgrp docker
+
+# ==== setup ozone ====
+wget https://www.segger.com/downloads/jlink/Ozone_Linux_x86_64.deb 
+apt install ./Ozone_Linux_x86_64.deb
+
+# ==== setup cmake ====
+wget https://github.com/Kitware/CMake/releases/download/v3.28.1/cmake-3.28.1-linux-x86_64.sh > cmake.sh
+chmod +x cmake.sh
+./cmake.sh --skip-license 
+rm cmake.sh 
+cp -r bin/* /usr/bin/ && cp share/* -r /usr/share/
+
 
